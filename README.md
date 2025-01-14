@@ -7,9 +7,6 @@ Le projet consiste à développer une application complète de gestion de réser
 ### 1. Back-end avec Node.js et MySQL (MVC)
 - Création d’une API RESTful pour gérer les voitures, les clients, et les réservations.
 
-### 2. Front-end avec Xamarin.Forms
-- Développement d’une application mobile pour interagir avec l’API, permettant aux utilisateurs de gérer les réservations et les informations associées.
-
 ---
 
 ## Partie 1 : Back-End avec Node.js et MySQL (MVC)
