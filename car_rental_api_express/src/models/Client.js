@@ -7,6 +7,22 @@ const Client = {
         db.query(query, callback);
     },
 
+    // Lister un client par id.
+    getClientById: (clientData, callback) => {
+        const params = [clientData.id];
+        const query = 'SELECT * FROM clients WHERE id = ?';
+        db.query(query, params, (err, results) => {
+            if (err) {
+                console.error('Database error:', err); // Log for debugging
+                return callback(new Error('Error fetching client'), null);
+            }
+            if (results.length === 0) {
+                return callback(new Error('Client not found'), null);
+            }
+            callback(null, results[0]); // Return the single client record
+        });
+    },
+       
     // Ajoute un nouveau client.
     create: (clientData, callback) => {
         const query = 'INSERT INTO clients (nom, prenom, email, telephone) VALUES (?, ?, ?, ?)';

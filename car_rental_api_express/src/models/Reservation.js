@@ -6,8 +6,8 @@ const Reservation = {
         const query = `
             SELECT r.id, v.marque, v.modele, c.nom, c.prenom, r.date_debut, r.date_fin
             FROM reservations r
-            JOIN voitures v ON r.voitures_id = v.id
-            JOIN clients c ON r.clients_id = c.id
+            JOIN voitures v ON r.voiture_id = v.id
+            JOIN clients c ON r.client_id = c.id
         `;
         db.query(query, callback);
     },
@@ -17,8 +17,8 @@ const Reservation = {
         const query = `
             SELECT r.id, c.nom, c.prenom, r.date_debut, r.date_fin
             FROM reservations r
-            JOIN clients c ON r.clients_id = c.id
-            WHERE r.voitures_id = ?
+            JOIN clients c ON r.client_id = c.id
+            WHERE r.voiture_id = ?
         `;
         db.query(query, [voitureId], callback);
     },
@@ -28,22 +28,22 @@ const Reservation = {
         const query = `
             SELECT r.id, v.marque, v.modele, r.date_debut, r.date_fin
             FROM reservations r
-            JOIN voitures v ON r.voitures_id = v.id
-            WHERE r.clients_id = ?
+            JOIN voitures v ON r.voiture_id = v.id
+            WHERE r.client_id = ?
         `;
         db.query(query, [clientId], callback);
     },
 
     // Ajoute une nouvelle réservation.
     create: (reservationData, callback) => {
-        const query = 'INSERT INTO reservations (voitures_id, clients_id, date_debut, date_fin) VALUES (?, ?, ?, ?)';
+        const query = 'INSERT INTO reservations (voiture_id, client_id, date_debut, date_fin) VALUES (?, ?, ?, ?)';
         const params = [reservationData.voiture_id, reservationData.client_id, reservationData.date_debut, reservationData.date_fin];
         db.query(query, params, callback);
     },
 
     // Modifie une réservation existante.
     update: (id, reservationData, callback) => {
-        const query = 'UPDATE reservations SET voitures_id = ?, clients_id = ?, date_debut = ?, date_fin = ? WHERE id = ?';
+        const query = 'UPDATE reservations SET voiture_id = ?, client_id = ?, date_debut = ?, date_fin = ? WHERE id = ?';
         const params = [reservationData.voiture_id, reservationData.client_id, reservationData.date_debut, reservationData.date_fin, id];
         db.query(query, params, callback);
     },

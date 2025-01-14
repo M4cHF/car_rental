@@ -1,7 +1,7 @@
 const Client = require('../models/Client');
 
 const clientController = {
-    // // Lister tous les clients.
+    // Lister tous les clients.
     getAll: (req, res) => {
         Client.getAll((err, result) => {
             if (err) {
@@ -11,6 +11,25 @@ const clientController = {
         });
     },
 
+    // Lister un seul client.
+    getClientById: (req, res) => {
+        const clientId = req.params.id;
+        // Validate the client ID
+        if (!clientId) {
+            return res.status(400).json({ message: 'Client ID is required' });
+        }
+        Client.getClientById({ id: clientId }, (err, result) => {
+            if (err) {
+                console.error('Error fetching client:', err); // Log for debugging
+                return res.status(500).json({ message: 'Error fetching client', error: err.message || err });
+            }
+            if (!result) {
+                return res.status(404).json({ message: 'Client not found' });
+            }
+            res.status(200).json(result);
+        });
+    },
+    
     // Ajouter un nouveau client.
     create: (req, res) => {
         const { nom, prenom, email, telephone } = req.body;

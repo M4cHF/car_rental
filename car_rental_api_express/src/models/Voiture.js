@@ -7,6 +7,24 @@ const Voiture = {
         db.query(query, callback);
     },
 
+    // Lister une voiture par id :
+    getVoitureById: (voitureData, callback) => {
+        const params = [voitureData.id];
+        const query = 'SELECT * FROM voitures WHERE id = ?';
+    
+        // Execute the query
+        db.query(query, params, (err, results) => {
+            if (err) {
+                console.error('Database error:', err); // Log detailed error
+                return callback({ message: 'Error fetching voiture', error: err }, null);
+            }
+            if (results.length === 0) {
+                return callback({ message: 'Voiture not found', error: null }, null);
+            }
+            callback(null, results[0]); // Return the single voiture record
+        });
+    },
+
     // Ajoute une nouvelle voiture.
     create: (voitureData, callback) => {
         const query = 'INSERT INTO voitures (marque, modele, annee, prix) VALUES (?, ?, ?, ?)';

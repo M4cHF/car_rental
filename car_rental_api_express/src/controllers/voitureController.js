@@ -11,6 +11,28 @@ const voitureController = {
         });
     },
 
+    // Lister une voiture par id :
+    getVoitureById: (req, res) => {
+        const voitureId = req.params.id;
+    
+        // Validate the voiture ID
+        if (!voitureId) {
+            return res.status(400).json({ message: 'Voiture ID is required' });
+        }
+    
+        // Call the model function
+        Voiture.getVoitureById({ id: voitureId }, (err, result) => {
+            if (err) {
+                console.error('Error fetching voiture:', err); // Log detailed error
+                return res.status(500).json({ message: 'Error fetching voiture', error: err.message || err });
+            }
+            if (!result) {
+                return res.status(404).json({ message: 'Voiture not found' });
+            }
+            res.status(200).json(result);
+        });
+    },
+
     // Ajouter une nouvelle voiture :
     create: (req, res) => {
         const { marque, modele, annee, prix } = req.body;

@@ -4,6 +4,7 @@ const clientController = require('../controllers/clientController');
 
 // Routes pour Clients
 router.get('/clients', clientController.getAll);
+router.get('/clients/:id', clientController.getClientById);
 router.post('/clients', clientController.create);
 router.put('/clients/:id', clientController.update);
 router.delete('/clients/:id', clientController.delete);
